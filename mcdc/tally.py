@@ -1,4 +1,5 @@
 import numpy as np
+import numpy.polynomial.legendre as L
 
 from abc import ABC, abstractmethod
 
@@ -358,6 +359,8 @@ class Tally:
                 shape = [N_time, N_energy, N_spatial_face]
             elif score_name in ['partial_crossing']:
                 shape = [N_time, N_energy, N_spatial_face, 2]
+            elif score_name in ['fet']:
+                shape = [N_time, N_energy, N_spatial, 20]
             
             # Iteration dimension
             shape = [N_iter] + shape
@@ -377,6 +380,8 @@ class Tally:
                 S = ScoreCrossingNet(score, shape)
             elif score_name == 'partial_crossing':
                 S = ScoreCrossingPartial(score, shape)
+            elif score_name == 'fet':
+                S = ScoreFET(score, shape)
 
             # Set modifiers
             if score_mode == 'face':
@@ -533,6 +538,18 @@ class ScoreFlux(Score):
             j = bin_idx[i][1]
             flux = bin_score[i][0]
             self.bin[k,g,n,j] += flux
+
+class ScoreFET(Score):
+    def __init__(self, name, shape):
+        Score.__init__(self, name, shape)
+    def __call__(self, P, g, n, bin_idx, bin_score):
+        for i in range(len(bin_idx)):
+            k = bin_idx[i][0]
+            j = bin_idx[i][1]
+            flux = bin_score[i][0]
+            # fet, 20 terms
+            for l in range(20):
+                self.bin[k,g,j,l] += flux * L.Legendre.basis(l)(j/60 * 2 - 1)
             
 class ScoreAbsorption(Score):
     def __init__(self, name, shape):

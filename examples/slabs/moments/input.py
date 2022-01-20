@@ -67,7 +67,7 @@ for i in range(N_sources):
 
 spatial_filter = mcdc.FilterPlaneX(np.linspace(0.0, 6.0, 61))
 
-T = mcdc.Tally('tally', scores=['flux', 'flux-face', 'current', 'current-face'], 
+T = mcdc.Tally('tally', scores=['flux', 'flux-face', 'current', 'current-face', 'fet'], 
                spatial_filter=spatial_filter)
 
 tallies = [T]
