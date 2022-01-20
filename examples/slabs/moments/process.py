@@ -49,7 +49,7 @@ plt.legend()
 plt.title(r'$\bar{\phi}_i$')
 plt.show()
 
-x = np.linspace(-.98,.98,60)
+x = np.linspace(-.95,.95,60)
 
 plt.plot(x_mid,legend(x),'-b',label="MC")
 plt.xlabel(r'$x$, cm')
