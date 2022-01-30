@@ -25,14 +25,11 @@ with h5py.File('output.h5', 'r') as f:
     phi_sd      = f['tally/flux/sdev'][:]/dx
     phi_face    = f['tally/flux-face/mean'][:]
     phi_face_sd = f['tally/flux-face/sdev'][:]
-    J         = f['tally/current/mean'][:,0]/dx
-    J_sd      = f['tally/current/sdev'][:,0]/dx
-    J_face    = f['tally/current-face/mean'][:,0]
-    J_face_sd = f['tally/current-face/sdev'][:,0]
-
-    exp_coef = np.zeros(20)
+    # expansion coefficients
+    exp_coef = np.zeros(30)
     for i in range(20):
         exp_coef[i] = ((2*i + 1) / 2) * np.sum(f['tally/fet/mean'][:,i])
+    leg_sd      = f['tally/fet/sdev'][:]/dx
 
   
 print(exp_coef)
@@ -49,9 +46,10 @@ plt.legend()
 plt.title(r'$\bar{\phi}_i$')
 plt.show()
 
-x = np.linspace(-.95,.95,60)
+x = np.linspace(-1+1/60,1-1/60,60)
 
 plt.plot(x_mid,legend(x),'-b',label="MC")
+#plt.fill_between(x_mid,legend(x)-leg_sd,legend(x)+leg_sd,alpha=0.2,color='b')
 plt.xlabel(r'$x$, cm')
 plt.ylabel('Flux')
 plt.grid()

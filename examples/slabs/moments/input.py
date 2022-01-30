@@ -67,7 +67,7 @@ for i in range(N_sources):
 
 spatial_filter = mcdc.FilterPlaneX(np.linspace(0.0, 6.0, 61))
 
-T = mcdc.Tally('tally', scores=['flux', 'flux-face', 'current', 'current-face', 'fet'], 
+T = mcdc.Tally('tally', scores=['flux', 'flux-face', 'fet'], 
                spatial_filter=spatial_filter)
 
 tallies = [T]
@@ -80,7 +80,7 @@ tallies = [T]
 speeds = np.array([1.0])
 
 # Set simulator
-simulator = mcdc.Simulator(speeds, cells, sources, tallies=tallies, 
+simulator = mcdc.Simulator(speeds, cells, sources, tallies=tallies,
                            N_hist=10000)
 
 # Set population control and census

@@ -4,8 +4,11 @@
     "\\examples",
     "\\examples\\slabs",
     "\\examples\\slabs\\moments",
-    "\\mcdc"
+    "\\examples\\slabs\\multi_source",
+    "\\examples\\slabs\\reflected_core",
+    "\\mcdc",
+    "\\tests"
   ],
-  "SelectedNode": "\\examples\\slabs\\moments\\data_creation.py",
+  "SelectedNode": "\\mcdc\\tally.py",
   "PreviewInSolutionExplorer": false
 }
