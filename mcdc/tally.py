@@ -551,17 +551,6 @@ class ScoreFET(Score):
             for l in range(20):
                 self.bin[k,g,j,l] += flux * L.Legendre.basis(l)(j/60 * 2 - 1)
             
-class ScoreAbsorption(Score):
-    def __init__(self, name, shape):
-        Score.__init__(self, name, shape)
-    def __call__(self, P, g, n, bin_idx, bin_score):
-        for i in range(len(bin_idx)):
-            k = bin_idx[i][0]
-            j = bin_idx[i][1]
-            flux   = bin_score[i][0]
-            SigmaA = P.cell_old.material.SigmaA[P.g_old]
-            self.bin[k,g,n,j] += flux*SigmaA
-            
 class ScoreCurrent(Score):
     def __init__(self, name, shape):
         Score.__init__(self, name, shape)
