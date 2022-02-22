@@ -336,7 +336,6 @@ class Simulator:
                 sys.stdout.write(" [%-28s] %d%%" % ('='*int(perc*28), perc*100.0))
                 sys.stdout.flush()
 
-    
     def set_cell(self, P):
         pos = P.pos
         t = P.time
