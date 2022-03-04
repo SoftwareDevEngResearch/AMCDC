@@ -1,16 +1,7 @@
 import numpy as np
 import numpy.random as random
 
-#M = 100
-
-#SigmaC = np.zeros(M)
-#SigmaS = np.zeros(M)
-#SigmaF = np.zeros(M)
-#nu = np.zeros(M)
-
 t = np.linspace(0, 1, 10)
-
-#for i in range(M):
 
 # random cross sections, add up to total cross section
 SigmaCi = random.random()
@@ -40,6 +31,4 @@ for j in range(N_sources):
 # make probability a proportion    
 Sources[2,:] = Sources[2,:] / np.sum(Sources[2,:])
 
-print(Sources)
-
-np.savez('initial_data.npz', SigmaC=SigmaC, SigmaS=SigmaS, SigmaF=SigmaF, nu=nu, t=t, N_sources=N_sources, Sources=Sources)
+np.savez('examples/slabs/moments/initial_data.npz', SigmaC=SigmaC, SigmaS=SigmaS, SigmaF=SigmaF, nu=nu, t=t, N_sources=N_sources, Sources=Sources)

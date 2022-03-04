@@ -590,21 +590,6 @@ class Simulator:
         
         # Scatter particle
         self.scatter(P,mu0)
-			P.g = g_out
-			# Sample scattering angle
-			mu0 = 2.0*mcdc.random.rng() - 1.0;
-			# Scatter particle
-			self.scatter(P,mu0)
-			P.g = g_out
-			# Sample scattering angle
-			mu0 = 2.0*mcdc.random.rng() - 1.0;
-			# Scatter particle
-			self.scatter(P,mu0)
-			P.g = g_out
-			# Sample scattering angle
-			mu0 = 2.0*mcdc.random.rng() - 1.0;
-			# Scatter particle
-			self.scatter(P,mu0)
 
     # Scatter direction with scattering cosine mu
     def scatter(self, P, mu):

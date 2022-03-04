@@ -2,7 +2,7 @@ import numpy as np
 import sys, os
 
 # Get path to mcdc (not necessary if mcdc is installed)
-sys.path.append('../../../')
+sys.path.append('../')
 
 import mcdc
 

@@ -73,11 +73,8 @@ tallies = [T]
 # Set and run simulator
 # =============================================================================
 
-# Set speed
-speeds = np.array([1.0])
-
 # Set simulator
-simulator = mcdc.Simulator(speeds, cells, sources, tallies=tallies, 
+simulator = mcdc.Simulator(cells=cells, sources=sources, tallies=tallies, 
                            N_hist=10000)
 
 def test_regression_slab_beam():

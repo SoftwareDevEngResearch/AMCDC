@@ -2,13 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\examples",
+    "\\examples\\infinite_multigroup\\SHEM-361_k",
     "\\examples\\slabs",
     "\\examples\\slabs\\moments",
-    "\\examples\\slabs\\multi_source",
-    "\\examples\\slabs\\reflected_core",
     "\\mcdc",
     "\\tests"
   ],
-  "SelectedNode": "\\mcdc\\tally.py",
+  "SelectedNode": "\\arg_parser.py",
   "PreviewInSolutionExplorer": false
 }

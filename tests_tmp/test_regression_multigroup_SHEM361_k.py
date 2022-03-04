@@ -72,7 +72,7 @@ tallies = [T]
 # =============================================================================
 
 # Set simulator
-simulator = mcdc.Simulator(speeds, cells, sources, tallies=tallies, 
+simulator = mcdc.Simulator(cells=cells, sources=sources, tallies=tallies, 
                            N_hist=1000, decay=decay)
 
 # Set k-eigenvalue mode parameters
