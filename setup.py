@@ -13,7 +13,7 @@ long_description = readme
 
 setuptools.setup(
     name='mcdc',
-    version='0.1.0',
+    version='0.1.2.1',
     description='A Neutron transport Monte Carlo code',
     long_description=long_description,
     long_description_content_type='text/markdown',
