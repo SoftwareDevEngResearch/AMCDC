@@ -1,0 +1,47 @@
+materials:
+ M1:
+  file_name:
+  SigmaC: [[1.0]]
+  SigmaS: [[1.0]]
+  SigmaF:
+  nu_p:
+ M2:
+  file_name:
+  SigmaC: [[1.5]]
+  SigmaS: [[3.0]]
+  SigmaF:
+  nu_p:
+ M3:
+  file_name:
+  SigmaC: [[2.0]]
+  SigmaS: [[4.0]]
+  SigmaF: 
+  nu_p:
+surfaces:
+ S1:
+  x_position: 0.0
+  type: 'vacuum'
+ S2:
+  x_position: 2.0
+  type: 'transmission'
+ S3:
+  x_position: 4.0
+  type: 'transmission'
+ S4:
+  x_position: 6.0
+  type: 'vacuum'
+cells:
+ C1: 2
+ C2: 3
+ C3: 1
+sources:
+ Src_1:
+  x_position: [2.0,4.0]
+  probability: 1.0
+  direction:
+tallies:
+- 'flux'
+- 'current'
+- 'flux-face'
+- 'current-face'
+number_of_histories: 10000
