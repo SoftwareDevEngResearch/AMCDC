@@ -4,7 +4,7 @@ import numpy as np
 
 from math import floor
 
-import mcdc.random
+import mcdc.mcdc_random
 import mcdc.mpi
 
 from mcdc.point        import Point
@@ -12,7 +12,7 @@ from mcdc.particle     import Particle
 from mcdc.distribution import DistPointIsotropic
 from mcdc.constant     import SMALL, VERY_SMALL,  LCG_SEED, LCG_STRIDE, INF,\
                               EVENT_COLLISION, EVENT_SURFACE, EVENT_CENSUS
-from mcdc.random       import RandomLCG
+from mcdc.mcdc_random       import RandomLCG
 from mcdc.pct          import *
 from mcdc.misc         import binary_search
 from mcdc.print        import print_banner
@@ -141,7 +141,7 @@ class Simulator:
         self.pct.prepare(self.N_hist)
    
         # Setup RNG
-        mcdc.random.rng = RandomLCG(seed=self.seed, stride=self.stride)
+        mcdc.mcdc_random.rng = RandomLCG(seed=self.seed, stride=self.stride)
 
         # Normalize sources
         norm = 0.0
@@ -220,7 +220,7 @@ class Simulator:
                     tot += P.wgt
 
                 # Rebase RNG for population control
-                mcdc.random.rng.skip_ahead(
+                mcdc.mcdc_random.rng.skip_ahead(
                     mcdc.mpi.work_size_total-mcdc.mpi.work_start, rebase=True)
 
                 # Population control
@@ -293,17 +293,17 @@ class Simulator:
     
     def loop_source(self):
         # Rebase rng skip_ahead seed
-        mcdc.random.rng.skip_ahead(mcdc.mpi.work_start, rebase=True)
+        mcdc.mcdc_random.rng.skip_ahead(mcdc.mpi.work_start, rebase=True)
 
         # Loop over sources
         for i in range(mcdc.mpi.work_size):
             # Initialize RNG wrt global index
-            mcdc.random.rng.skip_ahead(i)
+            mcdc.mcdc_random.rng.skip_ahead(i)
 
             # Get a source particle and put into history bank
             if not self.bank_source:
                 # Sample source
-                xi = mcdc.random.rng()
+                xi = mcdc.mcdc_random.rng()
                 tot = 0.0
                 source = None
                 for s in self.sources:
@@ -494,7 +494,7 @@ class Simulator:
     # =========================================================================
 
     def get_collision_distance(self, P):
-        xi     = mcdc.random.rng()
+        xi     = mcdc.mcdc_random.rng()
         SigmaT = P.cell.material.total[P.g]
 
         SigmaT += VERY_SMALL # To ensure non-zero value
@@ -545,7 +545,7 @@ class Simulator:
             SigmaT += abs(self.alpha_eff)/P.cell.material.speed[P.g]
         
         # Sample and then implement reaction type
-        xi = mcdc.random.rng()*SigmaT
+        xi = mcdc.mcdc_random.rng()*SigmaT
         tot = SigmaS
         if tot > xi:
             # Scattering
@@ -577,7 +577,7 @@ class Simulator:
         G     = P.cell.material.G
         
         # Sample outgoing energy
-        xi  = mcdc.random.rng()
+        xi  = mcdc.mcdc_random.rng()
         tot = 0.0
         for g_out in range(G):
             tot += chi_s[g_out]
@@ -586,7 +586,7 @@ class Simulator:
         P.g = g_out
         
         # Sample scattering angle
-        mu0 = 2.0*mcdc.random.rng() - 1.0;
+        mu0 = 2.0*mcdc.mcdc_random.rng() - 1.0;
         
         # Scatter particle
         self.scatter(P,mu0)
@@ -594,7 +594,7 @@ class Simulator:
     # Scatter direction with scattering cosine mu
     def scatter(self, P, mu):
         # Sample azimuthal direction
-        azi     = 2.0*np.pi*mcdc.random.rng()
+        azi     = 2.0*np.pi*mcdc.mcdc_random.rng()
         cos_azi = np.cos(azi)
         sin_azi = np.sin(azi)
         Ac      = (1.0 - mu**2)**0.5
@@ -637,13 +637,13 @@ class Simulator:
 
         # Sample number of fission neutrons
         #   in fixed-source, k_eff = 1.0
-        N = floor(nu/self.k_eff + mcdc.random.rng())
+        N = floor(nu/self.k_eff + mcdc.mcdc_random.rng())
 
         # Push fission neutrons to bank
         for n in range(N):
             # Determine if it's prompt or delayed neutrons, 
             # then get the energy spectrum and decay constant
-            xi  = mcdc.random.rng()*nu
+            xi  = mcdc.mcdc_random.rng()*nu
             tot = nu_p
             # Prompt?
             if tot > xi:
@@ -659,7 +659,7 @@ class Simulator:
                         break
 
             # Sample emission time
-            xi = mcdc.random.rng()
+            xi = mcdc.mcdc_random.rng()
             t_out = P.time - np.log(xi)/decay
 
             # Skip if it's beyound final census time
@@ -667,7 +667,7 @@ class Simulator:
                 continue
 
             # Sample outgoing energy
-            xi  = mcdc.random.rng()
+            xi  = mcdc.mcdc_random.rng()
             tot = 0.0
             for g_out in range(G):
                 tot += spectrum[g_out]

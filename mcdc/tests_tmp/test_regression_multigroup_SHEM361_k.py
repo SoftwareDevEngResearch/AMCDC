@@ -10,22 +10,20 @@ import mcdc
 # Set material XS
 # =============================================================================
 
-#with np.load('test_regression_multigroup_G12_k_XS.npz', allow_pickle=True) as data:
-with np.load('test_regression_multigroup_G12_k_XS.npz') as data:
+with np.load('mcdc/tests_tmp/test_regression_multigroup_SHEM361_XS.npz') as data:
     speeds = data['v']        # cm/s
-    SigmaT = data['SigmaT']   # /cm
+    SigmaC = data['SigmaC']   # /cm
     SigmaS = data['SigmaS']
     SigmaF = data['SigmaF']
-    SigmaC = SigmaT - np.sum(SigmaS,0) - np.sum(SigmaF,0)
-    nu     = data['nu']
-G = len(speeds)
-
-# Augment with uniform leakage XS
-SigmaL  = 0.14 # /cm
-SigmaC += SigmaL
+    nu_p   = data['nu_p']
+    nu_d   = data['nu_d']
+    chi_d  = data['chi_d']
+    chi_p  = data['chi_p']
+    decay  = data['lamd']
+    G = data['G']
 
 # Set material
-M = mcdc.Material(SigmaC, SigmaS, SigmaF, nu)
+M = mcdc.Material(SigmaC, SigmaS, SigmaF, nu_p, nu_d, chi_p, chi_d)
 
 # =============================================================================
 # Set cells
@@ -74,8 +72,8 @@ tallies = [T]
 # =============================================================================
 
 # Set simulator
-simulator = mcdc.Simulator(cells=cells, sources=sources, tallies=tallies,
-                           N_hist=1000)
+simulator = mcdc.Simulator(cells=cells, sources=sources, tallies=tallies, 
+                           N_hist=1000, decay=decay)
 
 # Set k-eigenvalue mode parameters
 simulator.set_kmode(N_iter=110)
@@ -88,9 +86,10 @@ def test_regression_multigroup_G12_k():
     with h5py.File('output.h5', 'r') as f:
         phi = f['tally/flux/mean'][:]
         k   = f['keff'][:]
-        
+    os.remove('output.h5')
+
     # Sol
-    with h5py.File('test_regression_multigroup_G12_k_solution_h5', 'r') as f:
+    with h5py.File('mcdc/tests_tmp/test_regression_multigroup_SHEM361_k_solution_h5', 'r') as f:
         phi_ref = f['tally/flux/mean'][:]
         k_ref   = f['keff'][:]
 

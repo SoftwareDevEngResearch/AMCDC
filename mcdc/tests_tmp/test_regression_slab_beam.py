@@ -2,7 +2,7 @@ import numpy as np
 import sys, h5py, os
 
 # Get path to mcdc (not necessary if mcdc is installed)
-sys.path.append('C:/Users/larse/Source/Repos/MCDC')
+sys.path.append('../')
 
 import mcdc
 
@@ -90,7 +90,7 @@ def test_regression_slab_beam():
     os.remove('output.h5')
 
     # Sol
-    with h5py.File('test_regression_slab_beam_solution_h5', 'r') as f:
+    with h5py.File('mcdc/tests_tmp/test_regression_slab_beam_solution_h5', 'r') as f:
         phi_ref         = f['tally/flux/mean'][:]
         phi_sd_ref      = f['tally/flux/sdev'][:]
         phi_face_ref    = f['tally/flux-face/mean'][1:]

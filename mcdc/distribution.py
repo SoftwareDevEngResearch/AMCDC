@@ -2,7 +2,7 @@ import numpy as np
 
 from abc import ABC, abstractmethod
 
-import mcdc.random
+import mcdc.mcdc_random
 
 from mcdc.constant import PI
 from mcdc.point    import Point
@@ -27,7 +27,7 @@ class DistUniform(Distribution):
         self.a = a
         self.b = b
     def sample(self):
-        xi = mcdc.random.rng()
+        xi = mcdc.mcdc_random.rng()
         return self.a + xi * (self.b - self.a)
 
 class DistUniformInt(Distribution):
@@ -35,7 +35,7 @@ class DistUniformInt(Distribution):
         self.a = a
         self.b = b
     def sample(self):
-        xi = mcdc.random.rng()
+        xi = mcdc.mcdc_random.rng()
         return self.a + floor(xi*(self.b - self.a))
 
 class DistGroup(Distribution):
@@ -51,7 +51,7 @@ class DistGroup(Distribution):
         for i in range(self.G):
             self.cdf[i+1] = self.cdf[i] + pmf[i]
     def sample(self):
-        xi  = mcdc.random.rng()
+        xi  = mcdc.mcdc_random.rng()
         return binary_search(xi, self.cdf)
 
 class DistPoint(Distribution):
@@ -65,8 +65,8 @@ class DistPoint(Distribution):
 class DistPointIsotropic(Distribution):
     def sample(self):
         # Sample polar cosine and azimuthal angle uniformly
-        mu  = 2.0*mcdc.random.rng() - 1.0
-        azi = 2.0*PI*mcdc.random.rng()
+        mu  = 2.0*mcdc.mcdc_random.rng() - 1.0
+        azi = 2.0*PI*mcdc.mcdc_random.rng()
 	
         # Convert to Cartesian coordinates
         c = (1.0 - mu**2)**0.5
@@ -84,9 +84,9 @@ class DistPointCylinderZ(Distribution):
         self.top    = top
 
     def sample(self):
-        xi1 = mcdc.random.rng()
-        xi2 = mcdc.random.rng()
-        xi3 = mcdc.random.rng()
+        xi1 = mcdc.mcdc_random.rng()
+        xi2 = mcdc.mcdc_random.rng()
+        xi3 = mcdc.mcdc_random.rng()
         r     = self.radius*np.sqrt(xi1)
         theta = 2.0*PI*xi2
         x     = self.x0 + r*np.cos(theta)

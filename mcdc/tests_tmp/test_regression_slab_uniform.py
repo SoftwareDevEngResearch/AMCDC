@@ -97,7 +97,7 @@ def test_regression_slab_uniform():
     os.remove('output.h5')
 
     # Sol
-    with h5py.File('test_regression_slab_uniform_solution_h5', 'r') as f:
+    with h5py.File('mcdc/tests_tmp/test_regression_slab_uniform_solution_h5', 'r') as f:
         phi_ref         = f['tally/flux/mean'][:]
         phi_sd_ref      = f['tally/flux/sdev'][:]
         phi_face_ref    = f['tally/flux-face/mean'][:]

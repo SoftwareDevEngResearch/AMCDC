@@ -1,5 +1,5 @@
 import numpy as np
-import sys
+import sys, h5py, os
 
 # Get path to mcdc (not necessary if mcdc is installed)
 sys.path.append('../')
@@ -10,7 +10,7 @@ import mcdc
 # Load initial data
 # =============================================================================
 
-data = np.load('tests_tmp/test_regression_moments.npz')
+data = np.load('mcdc/tests_tmp/test_regression_moments.npz')
 
 # =============================================================================
 # Set material
@@ -91,10 +91,10 @@ def test_regression_moments():
     os.remove('output.h5')
 
     # Sol
-    with h5py.File('test_regression_moments_solution_h5', 'r') as f:
+    with h5py.File('mcdc/tests_tmp/test_regression_moments_solution_h5', 'r') as f:
         phi_ref         = f['tally/flux/mean'][:]
         phi_sd_ref      = f['tally/flux/sdev'][:]
-        fet_ref         = f['tally/flux-face/mean'][:]
+        fet_ref         = f['tally/fet/mean'][:]
 
     assert phi.all() == phi_ref.all()
     assert phi_sd.all() == phi_sd_ref.all()
