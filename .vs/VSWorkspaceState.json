@@ -1,13 +1,14 @@
 {
   "ExpandedNodes": [
     "",
-    "\\examples",
-    "\\examples\\infinite_multigroup\\SHEM-361_k",
-    "\\examples\\slabs",
-    "\\examples\\slabs\\moments",
+    "\\dist",
     "\\mcdc",
-    "\\tests"
+    "\\mcdc\\examples",
+    "\\mcdc\\examples\\infinite_multigroup",
+    "\\mcdc\\examples\\slabs",
+    "\\mcdc\\examples\\slabs\\uniform_source",
+    "\\mcdc\\tests_tmp\\__pycache__"
   ],
-  "SelectedNode": "\\arg_parser.py",
+  "SelectedNode": "\\mcdc\\pct.py",
   "PreviewInSolutionExplorer": false
 }

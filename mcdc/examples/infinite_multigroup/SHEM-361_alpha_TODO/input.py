@@ -10,7 +10,6 @@ import mcdc
 # Set material XS
 # =============================================================================
 
-sys.path.append('../')
 with np.load('SHEM-361.npz') as data:
     speeds = data['v']        # cm/s
     SigmaC = data['SigmaC']   # /cm

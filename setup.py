@@ -13,7 +13,7 @@ long_description = readme
 
 setuptools.setup(
     name='mcdc',
-    version='0.1.2.4',
+    version='0.1.2.5',
     description='A Neutron transport Monte Carlo code',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -29,7 +29,13 @@ setuptools.setup(
     ],
     license='BSD-2-Clause',
     python_requires='>=3.6',
-    packages=['mcdc'],
+    packages=['mcdc', 'mcdc.examples', 'mcdc.tests_tmp',
+              'mcdc.examples.slabs',
+              'mcdc.examples.slabs.beam_source',
+              'mcdc.examples.slabs.eig_alpha',
+              'mcdc.examples.slabs.eig_k',
+              'mcdc.examples.slabs.multi_source',
+              'mcdc.examples.slabs.uniform_source'],
     setup_requires=['pytest-runner',],
     tests_require=['pytest'],
 )

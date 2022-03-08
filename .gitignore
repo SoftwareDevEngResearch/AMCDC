@@ -9,3 +9,6 @@ mcdc.egg-info
 # Editor
 .spyproject
 *.swp
+
+# H5 files
+*.h5

@@ -20,7 +20,7 @@ from mcdc.print        import print_banner
 
 class Simulator:
     def __init__(self, cells=[], sources=[], tallies=[], N_hist = 0, 
-                 speed=[], decay=[]):
+                 speed=[], decay=[], output=None):
 
         # Basic inputs
         #   TODO: run in batches
@@ -33,7 +33,10 @@ class Simulator:
         self.N_hist  = int(N_hist) # number of histories (per iteration)
 
         # Output file
-        self.output = "output" # .h5 output file name
+        if output == None:
+            self.output = "output" # .h5 output file name
+        else:
+            self.output = output
         
         # RNG settings
         self.seed   = LCG_SEED
