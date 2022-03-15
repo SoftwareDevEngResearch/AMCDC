@@ -41,6 +41,7 @@ def input_parser(inputs,output):
             mat = mcdc.Material(capture=SigmaC)
         elif SigmaC == None:
             print('No cross section for SigmaC')
+            sys.exit()
         if SigmaS != None:
             mat = mcdc.Material(capture=SigmaC, scatter=SigmaS)
         if SigmaF != None:
@@ -82,14 +83,26 @@ def input_parser(inputs,output):
         source = inputs['sources'][list(inputs['sources'])[i]]
 
         # Position distribution, only x currently
-        pos = mcdc.DistPoint(mcdc.DistUniform(source['x_position'][0],source['x_position'][1]), mcdc.DistDelta(0.0), 
-                                     mcdc.DistDelta(0.0))
-        # Direction distribution, only x currently
-        if source['direction'] != None:
-            dir = mcdc.DistPoint(mcdc.DistDelta(source['direction']), mcdc.DistDelta(0.0), 
-                                 mcdc.DistDelta(0.0))
+        if len(source['x_position']) == 1:
+            pos = mcdc.DistPoint(mcdc.DistDelta(source['x_position'][0]), mcdc.DistDelta(0.0), 
+                                        mcdc.DistDelta(0.0))
+        elif len(source['x_position']) == 2:
+            pos = mcdc.DistPoint(mcdc.DistUniform(source['x_position'][0],source['x_position'][1]), mcdc.DistDelta(0.0), 
+                                        mcdc.DistDelta(0.0))
         else:
+            print('Please provide valid source position')
+            sys.exit()
+
+        # Direction distribution between 0.0 and 1.0, only x currently
+        
+        if source['direction'] == None:
             dir = mcdc.DistPointIsotropic()
+        elif 0.0 <= source['direction'] <= 1.0:
+            dir = mcdc.DistPoint(mcdc.DistDelta(source['direction']), mcdc.DistDelta(0.0), 
+                                    mcdc.DistDelta(0.0))
+        else:
+            print('Please provide valid source direction')
+            sys.exit()
 
         # Energy group distribution
         g = mcdc.DistDelta(0)
@@ -98,7 +111,11 @@ def input_parser(inputs,output):
         time = mcdc.DistDelta(0.0)
 
         # Probability
-        prob = source['probability']
+        if isinstance(source['probability'], float) or isinstance(source['probability'], int):
+            prob = source['probability']
+        else:
+            print('Please provide valid source probability')
+            sys.exit()
 
         # Create the source
         Src = mcdc.SourceSimple(pos,dir,g,time,prob)
