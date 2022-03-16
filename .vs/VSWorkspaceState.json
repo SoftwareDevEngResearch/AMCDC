@@ -1,14 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\examples",
-    "\\examples\\slabs",
-    "\\examples\\slabs\\moments",
-    "\\examples\\slabs\\multi_source",
-    "\\examples\\slabs\\reflected_core",
+    "\\dist",
     "\\mcdc",
-    "\\tests"
+    "\\mcdc\\examples",
+    "\\mcdc\\examples\\slabs",
+    "\\mcdc\\examples\\slabs\\eig_k",
+    "\\mcdc\\examples\\slabs\\uniform_source",
+    "\\mcdc\\tests_tmp",
+    "\\mcdc\\tests_tmp\\__pycache__"
   ],
-  "SelectedNode": "\\mcdc\\tally.py",
+  "SelectedNode": "\\dist",
   "PreviewInSolutionExplorer": false
 }

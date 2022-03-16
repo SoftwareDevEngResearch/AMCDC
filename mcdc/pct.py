@@ -4,7 +4,7 @@ from abc    import ABC, abstractmethod
 from mpi4py import MPI
 from math   import floor, ceil
 
-import mcdc.random
+import mcdc.mcdc_random
 import mcdc.mpi
 
 from mcdc.mpi      import bank_scanning, bank_passing
@@ -86,7 +86,7 @@ class PCT_SS(PCT):
 
         # Locally count sampled particles
         for i in range(M):
-            xi  = mcdc.random.rng()
+            xi  = mcdc.mcdc_random.rng()
             idx = floor(xi*N) - idx_start
 
             # Local?
@@ -106,7 +106,7 @@ class PCT_SS(PCT):
             self.count[i] = 0
 
         # Skip ahead RNG
-        mcdc.random.rng.skip_ahead(M, stride=1, rebase=True)
+        mcdc.mcdc_random.rng.skip_ahead(M, stride=1, rebase=True)
  
         # Accordingly pass/distribute sampled particles
         return bank_passing(bank_sample)
@@ -127,7 +127,7 @@ class PCT_SR(PCT):
         idx_start, N_local, N = bank_scanning(bank)
 
         # Set RNG wrt bank index
-        mcdc.random.rng.skip_ahead(idx_start, stride=1, rebase=True)
+        mcdc.mcdc_random.rng.skip_ahead(idx_start, stride=1, rebase=True)
 
         # Sampling probability
         p = float(M)/float(N)
@@ -151,13 +151,13 @@ class PCT_SR(PCT):
                 bank_sample[-1].wgt = w_prime
 
             # Russian roulette
-            xi = mcdc.random.rng()
+            xi = mcdc.mcdc_random.rng()
             if xi < p_survive:
                 bank_sample.append(P.create_copy())
                 bank_sample[-1].wgt = w_prime
 
         # Rebase RNG (skipping the numbers used for popctrl)
-        mcdc.random.rng.skip_ahead(N-idx_start, rebase=True, stride=1)
+        mcdc.mcdc_random.rng.skip_ahead(N-idx_start, rebase=True, stride=1)
 
         # Accordingly pass/distribute sampled particles
         return bank_passing(bank_sample)
@@ -182,7 +182,7 @@ class PCT_CO(PCT):
         td = N/M
 
         # Tooth offset
-        xi     = mcdc.random.rng()
+        xi     = mcdc.mcdc_random.rng()
         offset = xi*td
 
         # First hiting tooth
@@ -202,7 +202,7 @@ class PCT_CO(PCT):
             bank_sample.append(P)
 
         # Rebase RNG (skipping the numbers used for popctrl)
-        mcdc.random.rng.rebase()
+        mcdc.mcdc_random.rng.rebase()
         
         # Accordingly pass/distribute sampled particles
         return bank_passing(bank_sample)
@@ -228,7 +228,7 @@ class PCT_COX(PCT):
 
         # First possible hiting tooth index (and set rng base)
         tooth_start = floor(idx_start/td)
-        mcdc.random.rng.skip_ahead(tooth_start, stride=1, rebase=True)
+        mcdc.mcdc_random.rng.skip_ahead(tooth_start, stride=1, rebase=True)
 
         # Last possible hiting tooth
         tooth_end = ceil(idx_end/td)
@@ -237,7 +237,7 @@ class PCT_COX(PCT):
         bank_sample = []
         for i in range(tooth_start, tooth_end):
             # Tooth
-            xi    = mcdc.random.rng()
+            xi    = mcdc.mcdc_random.rng()
             tooth = (xi+i)*td
 
             # Check if local
@@ -249,7 +249,7 @@ class PCT_COX(PCT):
                 bank_sample.append(P)
 
         # Skip ahead RNG (skipping the numbers used for popctrl)
-        mcdc.random.rng.skip_ahead(M-tooth_start, stride=1, rebase=True)
+        mcdc.mcdc_random.rng.skip_ahead(M-tooth_start, stride=1, rebase=True)
         
         # Accordingly pass/distribute sampled particles
         return bank_passing(bank_sample)
@@ -287,7 +287,7 @@ class PCT_DD(PCT):
                 self.count[i] = N_copy
 
             for i in range(N_sample):
-                xi  = mcdc.random.rng()
+                xi  = mcdc.mcdc_random.rng()
                 idx = floor(xi*N) - idx_start
 
                 # Local?
@@ -315,7 +315,7 @@ class PCT_DD(PCT):
             for i in range(N_sample):
                 while True:
                     # Sample discard index
-                    xi = mcdc.random.rng()
+                    xi = mcdc.mcdc_random.rng()
                     idx = floor(xi*N)
 
                     # Flag site if not discarded yet
@@ -340,7 +340,7 @@ class PCT_DD(PCT):
             for i in range(N): self.discard_flag[i] = False
 
         # Skip ahead RNG
-        mcdc.random.rng.skip_ahead(N_sample, stride=1, rebase=True)
+        mcdc.mcdc_random.rng.skip_ahead(N_sample, stride=1, rebase=True)
  
         # Accordingly pass/distribute sampled particles
         return bank_passing(bank_sample)
