@@ -1,12 +1,15 @@
 {
   "ExpandedNodes": [
     "",
+    "\\dist",
     "\\mcdc",
     "\\mcdc\\examples",
     "\\mcdc\\examples\\slabs",
+    "\\mcdc\\examples\\slabs\\eig_k",
     "\\mcdc\\examples\\slabs\\uniform_source",
+    "\\mcdc\\tests_tmp",
     "\\mcdc\\tests_tmp\\__pycache__"
   ],
-  "SelectedNode": "\\mcdc\\mcdc_input.py",
+  "SelectedNode": "\\dist",
   "PreviewInSolutionExplorer": false
 }

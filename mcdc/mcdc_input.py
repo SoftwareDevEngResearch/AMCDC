@@ -2,7 +2,7 @@ import sys
 import argparse
 
 import numpy as np
-import sys, os
+import sys
 import yaml
 
 # Get path to mcdc (not necessary if mcdc is installed)

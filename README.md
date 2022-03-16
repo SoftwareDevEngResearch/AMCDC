@@ -1,31 +1,31 @@
-# MCDC
+# MC/DC
 
 A python-based neutron transport Monte Carlo code. The code runs in multigroup mode and has numerous output scores including: 
 flux, current, higher order flux moments, and the Eddington tensor.
 
 Input allows the user to adjust geometry, sources, and materials.
 
-Output will be an hdf5 file with the selected tallies.
+Output will be an hdf5 file with user selected tallies.
 
 ## Usage
 
 MCDC can be easily installed on Windows, macOS, and Linux through pip with the following
 
-	py -m pip install mcdc
+	python -m pip install mcdc
 
 After installation, users can run their own input files through the command line with
 
-	py -m mcdc --input input.yaml --output ouput.h5
+	python -m mcdc --input input.yaml --output ouput.h5
 
 ## Examples
 
 Multiple example problems are included. These can be found with the command:
 
-	py -m mcdc --examples
+	python -m mcdc --examples
 
 and run using
 
-	py -m mcdc --example_name
+	python -m mcdc --example_name
 	
 ## Input
 An example input.yaml file is shown below
