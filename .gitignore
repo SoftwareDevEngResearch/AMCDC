@@ -12,3 +12,4 @@ mcdc.egg-info
 
 # H5 files
 *.h5
+/.vs/MCDC/FileContentIndex
